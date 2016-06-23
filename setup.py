@@ -18,7 +18,7 @@ setup(name="pordego",
       description="Command line tool for running configurable static analysis plugins on Python code",
       packages=find_packages(exclude=["tests", "tests.*"]),
       url="https://github.com/ttreptow/pordego",
-      download_url="https://github.com/ttreptow/pordego/tarball/0.0.6",
+      download_url="https://github.com/ttreptow/pordego/tarball/1.0.0",
       entry_points={'console_scripts': CONSOLE_SCRIPTS},
       install_requires=["pyyaml"],
       classifiers=CLASSIFIERS
