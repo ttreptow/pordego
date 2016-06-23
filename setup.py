@@ -12,13 +12,13 @@ CLASSIFIERS = [
 ]
 
 setup(name="pordego",
-      version="0.0.2",
+      version="0.0.3",
       author="Tim Treptow",
       author_email="tim.treptow@gmail.com",
       description="Command line tool for running configurable static analysis plugins on Python code",
       packages=find_packages(),
       url="https://github.com/ttreptow/pordego",
-      download_url="https://github.com/ttreptow/pordego/tarball/0.0.2",
+      download_url="https://github.com/ttreptow/pordego/tarball/0.0.3",
       entry_points={'console_scripts': CONSOLE_SCRIPTS},
       install_requires=["pyyaml"],
       classifiers=CLASSIFIERS
