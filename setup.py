@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 CONSOLE_SCRIPTS = ['pordego = pordego.cli:main']
 
 CLASSIFIERS = [
-    "Development Status :: 5 - Production/Stable",
+    "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
     "License :: OSI Approved :: MIT License"
     "Operating System :: OS Independent",
@@ -12,7 +12,7 @@ CLASSIFIERS = [
 ]
 
 setup(name="pordego",
-      version="1.0.0",
+      version="0.0.1",
       author="Tim Treptow",
       author_email="tim.treptow@gmail.com",
       description="Command line tool for running configurable static analysis plugins on Python code",
