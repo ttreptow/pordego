@@ -8,8 +8,8 @@ PLUGIN_NAMES = get_plugin_entry_point_names() + [ALL_PLUGINS]
 
 def build_parser():
     parser = ArgumentParser()
-    parser.add_argument("plugins", nargs="*", choices=PLUGIN_NAMES, default=[ALL_PLUGINS])
-    parser.add_argument("-c", "--config", dest="config_file", default=None)
+    parser.add_argument("plugins", nargs="*", choices=PLUGIN_NAMES, default=ALL_PLUGINS)
+    parser.add_argument("-c", "--config", dest="config_file", required=True)
     return parser
 
 

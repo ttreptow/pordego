@@ -25,7 +25,9 @@ def get_plugin_entry_point_names():
 
 
 def load_config(config_file):
-    with open(config_file) as f:
+    if config_file is None:
+        return {}
+    with open(config_file, "rt") as f:
         return yaml.load(f)
 
 
@@ -40,7 +42,7 @@ def prepare_plugin_config(plugin_config_list):
     plugin_config_dict = {}
     if plugin_config_list:
         try:
-            plugin_config_dict = {plugin_config["name"]: plugin_config for plugin_config in plugin_config_list["plugins"]}
+            plugin_config_dict = {plugin_config.pop("name"): plugin_config for plugin_config in plugin_config_list}
         except KeyError:
             raise Exception("Plugin configuration is missing mandatory 'name' field")
     return plugin_config_dict
@@ -60,6 +62,6 @@ def execute_plugins(prepared_plugins, plugin_config_dict, plugins_to_run=None):
     for plugin_name in plugins_to_run:
         if plugin_name not in prepared_plugins:
             raise Exception("Invalid plugin specified: {}".format(plugin_name))
-        plugin_func = prepared_plugins[plugin_name].ep.load()
+        plugin_func = prepared_plugins[plugin_name].load()
         logger.info("Executing plugin %s", plugin_name)
         plugin_func(plugin_config_dict.get(plugin_name))
