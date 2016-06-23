@@ -6,14 +6,10 @@ import yaml
 logger = getLogger(__name__)
 
 
-ALL_PLUGINS = "all"
-
-
-def run_plugins(config_file_path, plugins_to_run=None):
+def run_plugins(config_file_path):
     config = load_config(config_file_path)
-    plugin_config_dict = prepare_plugin_config(config.get("plugins"))
     plugin_eps = get_plugin_entry_points()
-    execute_plugins(plugin_eps, plugin_config_dict, plugins_to_run)
+    execute_plugins(plugin_eps, config.get("plugins"))
 
 
 def get_plugin_entry_points():
@@ -48,20 +44,26 @@ def prepare_plugin_config(plugin_config_list):
     return plugin_config_dict
 
 
-def execute_plugins(prepared_plugins, plugin_config_dict, plugins_to_run=None):
+def execute_plugins(plugin_entry_points, plugin_config_list):
     """
     Executes the analysis plugins
 
-    :param prepared_plugins:
-    :param plugin_config_dict:
-    :param plugins_to_run: If specified, only plugins in this list are executed in order, otherwise all plugins are executed
-    :return:
+    :param plugin_entry_points: a dictionary of plugin name to pkg_resources.EntryPoint
+    :param plugin_config_list: list of plugin configurations
     """
-    if plugins_to_run is None or ALL_PLUGINS in plugins_to_run:
-        plugins_to_run = prepared_plugins.keys()
-    for plugin_name in plugins_to_run:
-        if plugin_name not in prepared_plugins:
+    if plugin_config_list is None:
+        raise Exception("No plugin configuration specified!")
+    for plugin_config in plugin_config_list:
+        try:
+            plugin_name = plugin_config.pop("name")
+        except KeyError:
+            raise Exception("Plugin configuration is missing mandatory 'name' field")
+        if plugin_name not in plugin_entry_points:
             raise Exception("Invalid plugin specified: {}".format(plugin_name))
-        plugin_func = prepared_plugins[plugin_name].load()
+        plugin_func = plugin_entry_points[plugin_name].load()
         logger.info("Executing plugin %s", plugin_name)
-        plugin_func(plugin_config_dict.get(plugin_name))
+        try:
+            plugin_func(plugin_config)
+        except AssertionError as e:
+            logger.error("Plugin %s assertion error:\n%s", plugin_name, e)
+            raise
