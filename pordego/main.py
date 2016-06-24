@@ -9,6 +9,12 @@ logger = getLogger(__name__)
 
 
 def run_plugins(config_file_path):
+    """
+    Run all plugins. This is the entry point to pordego when being used programatically
+
+    :param config_file_path: Path to the configuration file
+    :return:
+    """
     config = load_config(config_file_path)
     analysis_eps = get_plugin_entry_points(ANALYSIS_PLUGIN_TYPE)
     analysis_results = execute_plugins(analysis_eps, config.get("analysis"), execute_analysis_function)
