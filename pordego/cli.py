@@ -2,24 +2,25 @@ import logging
 import sys
 from argparse import ArgumentParser
 
-from pordego.main import run_plugins, get_plugin_entry_point_names
+from pordego.main import run_plugins
+from pordego.discovery import ANALYSIS_PLUGIN_TYPE, OUTPUT_PLUGIN_TYPE, get_plugin_entry_point_names
 
 LOG_FORMAT = " | ".join(["%(levelname)s", "%(asctime)s", "%(message)s"])
 
 
-def run_analysis_plugins(args, logger):
-    try:
-        run_plugins(args.config_file)
-    except AssertionError:
-        sys.exit(-1)
-    except Exception:
-        logger.exception("Plugin error")
-        sys.exit(-2)
+def run_analysis_plugins(args):
+    run_plugins(args.config_file)
 
 
-def show_plugins(args, logger):
-    print "Available Plugins:"
-    for plugin_name in get_plugin_entry_point_names():
+def show_plugins(args):
+    print_plugins(ANALYSIS_PLUGIN_TYPE, "Analysis")
+    print ""
+    print_plugins(OUTPUT_PLUGIN_TYPE, "Output")
+
+
+def print_plugins(plugin_type, plugin_output_name):
+    print "Avaliable {} Plugins:".format(plugin_output_name)
+    for plugin_name in get_plugin_entry_point_names(plugin_type):
         print plugin_name
 
 
@@ -52,10 +53,10 @@ def build_parser():
 
 
 def main():
-    logger = init_logging()
+    init_logging()
     parser = build_parser()
     args = parser.parse_args()
-    args.func(args, logger)
+    args.func(args)
     return 0
 
 

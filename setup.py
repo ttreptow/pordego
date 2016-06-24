@@ -11,15 +11,19 @@ CLASSIFIERS = [
     "Programming Language :: Python :: 2.7"
 ]
 
+VERSION = "1.1.0"
+
 setup(name="pordego",
-      version="1.0.0",
+      version=VERSION,
       author="Tim Treptow",
       author_email="tim.treptow@gmail.com",
       description="Command line tool for running configurable static analysis plugins on Python code",
       packages=find_packages(exclude=["tests", "tests.*"]),
       url="https://github.com/ttreptow/pordego",
-      download_url="https://github.com/ttreptow/pordego/tarball/1.0.0",
-      entry_points={'console_scripts': CONSOLE_SCRIPTS},
-      install_requires=["pyyaml"],
+      download_url="https://github.com/ttreptow/pordego/tarball/{}".format(VERSION),
+      entry_points={'console_scripts': CONSOLE_SCRIPTS,
+                    "pordego.output": ["junit = pordego.junit_output:write_output_file",
+                                       "stdout = pordego.logging_output:print_output"]},
+      install_requires=["pyyaml", "junit-xml"],
       classifiers=CLASSIFIERS
       )
