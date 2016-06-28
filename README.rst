@@ -96,6 +96,29 @@ And then it will be executed again with
     "myplugin_param_2": ["list item 7"]
     }
 
+It is also possible to include plugin configurations. For example, in the main config file:
+
+.. code-block:: yaml
+
+    ---
+    analysis:
+      - include: myplugin_config.yml
+
+The contents of myplugin_config.yml are:
+
+.. code-block:: yaml
+
+    ---
+    - plugin_name: myplugin
+      name: Check config 1
+      myplugin_param_1: config val
+      myplugin_param_2:
+        - list item 1
+        - list item 2
+
+Note that the included file only has a list of plugins, not the "analysis" tag.
+It is possible to recursively include files in included files as well as to have plugin configurations and include statements in the same file.
+
 
 Plugins
 -------
