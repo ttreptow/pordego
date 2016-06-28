@@ -1,8 +1,8 @@
+import os
 import sys
 from logging import getLogger
 
-import yaml
-
+from pordego.config_loader import load_config, get_analysis_configs
 from pordego.discovery import ANALYSIS_PLUGIN_TYPE, get_plugin_entry_points, OUTPUT_PLUGIN_TYPE
 
 logger = getLogger(__name__)
@@ -15,19 +15,13 @@ def run_plugins(config_file_path):
     :param config_file_path: Path to the configuration file
     :return:
     """
-    config = load_config(config_file_path)
+    config = load_config(config_file_path, {})
     analysis_eps = get_plugin_entry_points(ANALYSIS_PLUGIN_TYPE)
-    analysis_results = execute_plugins(analysis_eps, config.get("analysis"), execute_analysis_function)
+    plugin_config_list = get_analysis_configs(config.get("analysis"), os.path.dirname(config_file_path))
+    analysis_results = execute_plugins(analysis_eps, plugin_config_list, execute_analysis_function)
     output_eps = get_plugin_entry_points(OUTPUT_PLUGIN_TYPE)
     execute_plugins(output_eps, config.get("output", []), execute_output_function, analysis_results)
     return analysis_results
-
-
-def load_config(config_file):
-    if config_file is None:
-        return {}
-    with open(config_file, "rt") as f:
-        return yaml.load(f)
 
 
 def execute_plugins(plugin_entry_points, plugin_config_list, execute_func, *execute_args):
