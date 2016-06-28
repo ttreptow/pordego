@@ -11,7 +11,7 @@ CLASSIFIERS = [
     "Programming Language :: Python :: 2.7"
 ]
 
-VERSION = "1.1.0"
+VERSION = "1.2.0"
 
 setup(name="pordego",
       version=VERSION,

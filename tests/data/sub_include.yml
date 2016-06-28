@@ -1,0 +1,4 @@
+---
+- plugin_name: sub_test
+  config_val: 1
+- include: sub_sub_include.yml

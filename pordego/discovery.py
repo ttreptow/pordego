@@ -9,4 +9,4 @@ def get_plugin_entry_points(plugin_type):
 
 
 def get_plugin_entry_point_names(plugin_type):
-    return [ep.name for ep in get_plugin_entry_points(plugin_type)]
+    return sorted([ep.name for ep in get_plugin_entry_points(plugin_type).values()])
