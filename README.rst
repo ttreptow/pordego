@@ -24,6 +24,7 @@ This will install the command line tool, which does not do much on it's own. You
 .. code-block:: bash
 
     $ pip install pordego-complexity
+    $ pip install pordego-dependency
 
 pordego will automatically detect installed plugins
 
@@ -126,11 +127,12 @@ Plugins
 Known Analysis Plugins
 ######################
 
-===========  ===========  =====================================================  ========
-Plugin Name  Maintainer   Description                                            Python Package Name
-===========  ===========  =====================================================  ========
-complexity   Tim Treptow  Uses the Radon package to check code complexity        `pordego-complexity <https://github.com/ttreptow/pordego-complexity>`_
-===========  ===========  =====================================================  ========
+===========  ===========  =======================================================  ========
+Plugin Name  Maintainer   Description                                              Python Package Name
+===========  ===========  =======================================================  ========
+complexity   Tim Treptow  Uses the Radon package to check code complexity          `pordego-complexity <https://github.com/ttreptow/pordego-complexity>`_
+dependency   Tim Treptow  Uses the snakefood package to test package dependencies  `pordego-dependency <https://github.com/ttreptow/pordego-dependency>`_
+===========  ===========  =======================================================  ========
 
 Known Output Plugins
 ####################
