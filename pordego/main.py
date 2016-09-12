@@ -4,7 +4,9 @@ from logging import getLogger
 
 from pordego.config_loader import load_config, get_analysis_configs
 from pordego.discovery import ANALYSIS_PLUGIN_TYPE, get_plugin_entry_points, OUTPUT_PLUGIN_TYPE
+from pordego.plugin_logging import setup_logging
 
+setup_logging()
 logger = getLogger(__name__)
 
 
@@ -66,3 +68,4 @@ def execute_output_function(plugin_name, plugin_func, plugin_config, analysis_re
         plugin_func(analysis_results, plugin_config)
     except Exception:
         logger.exception("Output plugin %s failed", plugin_name)
+
